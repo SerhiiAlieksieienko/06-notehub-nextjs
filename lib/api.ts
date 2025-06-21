@@ -1,7 +1,7 @@
 import type { Note, CreateNote } from "../types/notes";
 import axios from "axios";
 
-const API_URL = 'https://notehub-public.goit.study/api/notes';
+const API_URL = "https://notehub-public.goit.study/api";
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 const axiosInstance = axios.create({
@@ -12,8 +12,8 @@ const axiosInstance = axios.create({
 });
 
 interface FetchNotes {
-    notes: Note[];
-    totalPages: number;
+  notes: Note[];
+  totalPages: number;
 }
 interface FetchParams {
   search?: string;
@@ -21,32 +21,30 @@ interface FetchParams {
   perPage?: number;
 }
 
- export async function fetchNotes(  
+export async function fetchNotes(
   searchText: string,
   page: number,
-  perPage: number = 12
+  perPage: number = 12,
 ): Promise<FetchNotes> {
-   const params: FetchParams = {
-    ...(searchText.trim() !== "" && {search: searchText.trim()}),
+  const params: FetchParams = {
+    ...(searchText.trim() !== "" && { search: searchText.trim() }),
     page,
     perPage,
   };
 
-  const res = await axiosInstance.get<FetchNotes>("/", { params });
- return res.data;
- };
+  const res = await axiosInstance.get<FetchNotes>("/notes", { params });
+  return res.data;
+}
 
+export async function createNote(newNote: CreateNote): Promise<Note> {
+  const res = await axiosInstance.post<Note>("/notes", newNote);
+  return res.data;
+}
 
- export async function createNote(newNote: CreateNote): Promise<Note> {
-    const res = await axiosInstance.post<Note>("/" , newNote);
-    return res.data;
- }
-
- export async function deleteNote (noteId: number): Promise<Note> {
-    const res = await axiosInstance.delete<Note>(`/${noteId}`);
-    return res.data;
-};
- 
+export async function deleteNote(noteId: number): Promise<Note> {
+  const res = await axiosInstance.delete<Note>(`/notes/${noteId}`);
+  return res.data;
+}
 
 export async function fetchNoteById(noteId: number): Promise<Note> {
   const res = await axiosInstance.get<Note>(`/notes/${noteId}`);

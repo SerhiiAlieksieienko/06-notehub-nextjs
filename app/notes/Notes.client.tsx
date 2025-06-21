@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -9,7 +8,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import NoteList from "../../components/NoteList/NoteList";
 import NoteModal from "../../components/NoteModal/NoteModal";
 import SearchBox from "../../components/SearchBox/SearchBox";
-import css from "./NoteDetails.module.css";
+import css from "./NotesPage.module.css";
 
 export default function NotesClient() {
   const [searchText, setSearchText] = useState("");
